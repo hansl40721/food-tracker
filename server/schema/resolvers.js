@@ -10,13 +10,13 @@ const resolvers = {
             return User.findOne({ username }).populate('groceries');
         },
         groceries: async (parent, { username }) => {
-            const user = await User.findOne({ username }).populate('groceries').sort({ name: 1 });
+            const user = await User.findOne({ username }).populate('groceries');
 
             if (!user) {
                 throw new Error('User not found');
             }
 
-            return user;
+            return user.groceries.sort((a, b) => a.name.localCompare(b.name));
         },
         grocery: async (parent, { username, groceryId }) => {
             const user = await User.findOne({ username });
@@ -40,7 +40,7 @@ const resolvers = {
                 throw new Error('User not found');
             }
 
-            return user;
+            return user.lists;
         },
         list: async (parent, { username, listId }) => {
             const user = await User.findOne({ username });
@@ -70,13 +70,13 @@ const resolvers = {
             const user = await User.findOne({ email });
 
             if(!user) {
-                throw AuthenticationError;
+                throw new AuthenticationError('User not found');
             }
 
             const correctPW = await user.isCorrectPassword(password);
 
-            if (!user) {
-                throw AuthenticationError;
+            if (!correctPW) {
+                throw new AuthenticationError('Incorrect password');
             }
 
             const token = signToken(user);
@@ -91,53 +91,53 @@ const resolvers = {
                     expiration,
                 });
 
-                await User.findOneandUpdate(
+                await User.findOneAndUpdate(
                     { _id: context.user._id },
                     { $addToSet: { groceries: groceryItem._id } }
                 );
 
                 return groceryItem;
             }
-            throw AuthenticationError;
+            throw new AuthenticationError('Unable to add item');
         },
         addList: async (parent, { title }, context) => {
             if(context.user) {
                 const list = await List.create({ title });
 
-                await User.findOneandUpdate(
-                    { id: context.user._id },
+                await User.findOneAndUpdate(
+                    { _id: context.user._id },
                     { $addToSet: { lists: list._id } }
                 );
 
                 return list;
             }
-            throw AuthenticationError;
+            throw new AuthenticationError('Unable to add list');
         },
         removeGroceryItem: async (parent, { groceryId }, context) => {
             if(context.user) {
-                const groceryItem = await Grocery.findOneandDelete({ _id: groceryId });
+                const groceryItem = await Grocery.findOneAndDelete({ _id: groceryId });
 
-                await User.findOneandUpdate(
+                await User.findOneAndUpdate(
                     { _id: context.user._id },
                     { $pull: { groceries: groceryItem._id }}
                 );
 
                 return groceryItem;
             }
-            throw AuthenticationError;
+            throw new AuthenticationError('Unable to remove item');
         },
         removeList: async (parent, { listId }, context) => {
             if( context.user) {
-                const list = await List.findOneandDelete({ _id: listId});
+                const list = await List.findOneAndDelete({ _id: listId});
 
-                await User.findOneandUpdate(
+                await User.findOneAndUpdate(
                     { _id: context.user._id },
                     { $pull: { lists: list._id }}
                 );
 
                 return list;
             }
-            throw AuthenticationError;
+            throw new AuthenticationError('Unable to remove list');
         },
     },
 };
