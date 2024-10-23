@@ -22,6 +22,10 @@ const grocerySchema = new Schema({
             return dayjs(date).format("MM/DD/YYYY")
         },
     },
+    hasItem: {
+        type: Boolean,
+        default: false,
+    },
 },
     {
         toJSON: {

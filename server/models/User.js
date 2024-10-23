@@ -23,6 +23,12 @@ const userSchema = new Schema ({
             ref: 'Grocery'
         },
     ],
+    lists: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'List'
+        }
+    ]
 });
 
 userSchema.pre('save', async function (next) {
