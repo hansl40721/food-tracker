@@ -1,13 +1,26 @@
-import { User, Grocery, List } from '../models';
-import { signToken, AuthenticationError } from '../utils/auth';
+const { User, Grocery, List } = require('../models');
+const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
     Query: {
         users: async () => {
-            return User.find().populate('groceries');
+            const users = User.find().populate('groceries');
+
+            if (!users || users.length === 0) {
+                throw new Error('No users found');
+            }
+
+            return users;
+            
         },
         user: async (parent, { username }) => {
-            return User.findOne({ username }).populate('groceries');
+            const user = User.findOne({ username }).populate('groceries');
+
+            if (!user) {
+                throw new Error('User not found');
+            }
+
+            return user;
         },
         groceries: async (parent, { username }) => {
             const user = await User.findOne({ username }).populate('groceries');
@@ -31,7 +44,7 @@ const resolvers = {
                 throw new Error('Grocery item not found in user\'s groceries');
             }
 
-            return Grocery.findOne({_id: groceryId });
+            return Grocery.findOne({ _id: groceryId });
         },
         lists: async (parent, { username }) => {
             const user = await User.findOne({ username }).populate('lists');
