@@ -110,4 +110,11 @@ const REMOVE_LIST = gql`
     }
 `;
 
-module.exports = { LOGIN, ADD_USER, ADD_GROCERY_ITEM, ADD_LIST, REMOVE_USER, REMOVE_GROCERY_ITEM, REMOVE_LIST };
+module.exports = { 
+    LOGIN, 
+    ADD_USER, 
+    ADD_GROCERY_ITEM, 
+    ADD_LIST, 
+    REMOVE_USER, 
+    REMOVE_GROCERY_ITEM, 
+    REMOVE_LIST };
