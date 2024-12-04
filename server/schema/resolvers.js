@@ -126,6 +126,17 @@ const resolvers = {
             }
             throw new AuthenticationError('Unable to add list');
         },
+        removeUser: async (parent, { userId }, context) => {
+            if(context.user) {
+                const userToDelete = await User.findOneAndDelete({ _id: userId });
+
+                await Grocery.deleteMany({ id: { $in: userToDelete.groceries }});
+                await List.deleteMany({ id: { $in: userToDelete.lists }});
+
+                return userToDelete;
+            }
+            throw new AuthenticationError('Unable to delete user');
+        },
         removeGroceryItem: async (parent, { groceryId }, context) => {
             if(context.user) {
                 const groceryItem = await Grocery.findOneAndDelete({ _id: groceryId });

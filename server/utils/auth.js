@@ -1,4 +1,4 @@
-import { GraphQLError } from 'graphql';
+const { GraphQLError } = require('graphql');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
