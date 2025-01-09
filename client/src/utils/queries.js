@@ -1,6 +1,6 @@
 const { gql } = require("@apollo/client");
 
-export const QUERY_USERS = gql`
+const QUERY_USERS = gql`
     query getUsers {
         users {
             _id
@@ -29,7 +29,7 @@ export const QUERY_USERS = gql`
     }
 `;
 
-export const QUERY_USER = gql`
+const QUERY_USER = gql`
     query user($username: String!) {
         user(username: $username) {
             _id
@@ -58,7 +58,7 @@ export const QUERY_USER = gql`
     }
 `;
 
-export const QUERY_GROCERIES = gql`
+const QUERY_GROCERIES = gql`
     query getGroceries {
         groceries {
             _id
@@ -71,7 +71,7 @@ export const QUERY_GROCERIES = gql`
     }
 `;
 
-export const QUERY_SINGLE_GROCERY = gql`
+const QUERY_SINGLE_GROCERY = gql`
     query getSingleGrocery($groceryId: ID!) {
         grocery(groceryId: $groceryId) {
             _id
@@ -84,7 +84,7 @@ export const QUERY_SINGLE_GROCERY = gql`
     }
 `;
 
-export const QUERY_LISTS = gql`
+const QUERY_LISTS = gql`
     query getLists {
         lists {
             title
@@ -100,7 +100,7 @@ export const QUERY_LISTS = gql`
     }
 `;
 
-export const QUERY_SINGLE_LIST = gql`
+const QUERY_SINGLE_LIST = gql`
     query getSingleList($listId: ID!) {
         list(listId: $listId) {
             title
@@ -115,3 +115,12 @@ export const QUERY_SINGLE_LIST = gql`
         }
     }
 `;
+
+module.exports = {
+    QUERY_USERS,
+    QUERY_USER,
+    QUERY_GROCERIES,
+    QUERY_SINGLE_GROCERY,
+    QUERY_LISTS,
+    QUERY_SINGLE_LIST
+};
