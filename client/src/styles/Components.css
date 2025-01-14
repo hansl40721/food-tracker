@@ -1,0 +1,18 @@
+.nav {
+    display: flex;
+    justify-content: space-between;
+    font-family: "Protest Riot", sans-serif;
+    font-size: x-large;
+    padding: 10px 5%;
+    align-items: center;
+    border: 2px;
+    border-radius: 5px; 
+    color: white;
+    background-color: #ecb890;
+}
+
+.navTitle,
+.navLogo,
+.navBtns {
+    min-width: 32%;
+}
