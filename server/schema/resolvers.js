@@ -133,7 +133,7 @@ const resolvers = {
                 await Grocery.deleteMany({ id: { $in: userToDelete.groceries }});
                 await List.deleteMany({ id: { $in: userToDelete.lists }});
 
-                return userToDelete;
+                return "User successfully removed";
             }
             throw new AuthenticationError('Unable to delete user');
         },

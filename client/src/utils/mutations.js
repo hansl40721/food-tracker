@@ -72,11 +72,7 @@ const ADD_LIST = gql`
 
 const REMOVE_USER = gql`
     mutation removeUser($_id: ID!) {
-        removeUser(_id: $_id) {
-            username
-            email
-            password
-        }
+        removeUser(_id: $_id)
     }
 `
 

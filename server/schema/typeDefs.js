@@ -33,7 +33,7 @@ type Query {
 }
 
 type Auth {
-    token: String!
+    token: ID!
     user: User
 }
 
@@ -42,6 +42,7 @@ type Mutation {
     login(email: String!, password: String!): Auth!
     addGroceryItem(type: String!, expiration: String): Grocery!
     addList(title: String!): List!
+    removeUser(_id: ID!): String!
     removeGroceryItem(groceryId: ID!): Grocery!
     removeList(listId: ID!): List!
 }
