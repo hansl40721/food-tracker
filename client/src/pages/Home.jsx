@@ -14,7 +14,7 @@ const Home = () => {
                             <Link to='/login'>Login</Link>
                         </div>
                     ) : (
-                        <div className='loginLink'>
+                        <div className='pantryLink'>
                             <Link to='/pantry'>Go to Pantry</Link>
                         </div>
                     )
@@ -24,9 +24,6 @@ const Home = () => {
                 <div className='splashImage'>
                     {/* put images here */}
                 </div>
-            </div>
-            <div className='footer'>
-                    <p>Made by Lucas Hansen</p>
             </div>
         </div>
     );
